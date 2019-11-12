@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.168
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gyomu", "Gyomu\Gyomu.csproj", "{034BFAA4-EE7B-4AC4-8DF7-6E2827B25E61}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gyomu.Test", "Gyomu.Test\Gyomu.Test.csproj", "{51F85364-8B8D-4533-AD78-AFACA60D92C0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{034BFAA4-EE7B-4AC4-8DF7-6E2827B25E61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{034BFAA4-EE7B-4AC4-8DF7-6E2827B25E61}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{034BFAA4-EE7B-4AC4-8DF7-6E2827B25E61}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{034BFAA4-EE7B-4AC4-8DF7-6E2827B25E61}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51F85364-8B8D-4533-AD78-AFACA60D92C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51F85364-8B8D-4533-AD78-AFACA60D92C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51F85364-8B8D-4533-AD78-AFACA60D92C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51F85364-8B8D-4533-AD78-AFACA60D92C0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {276B9A96-7F7F-4D3E-868C-BAB66B392BC6}
+	EndGlobalSection
+EndGlobal
