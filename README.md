@@ -22,6 +22,18 @@ StatusCode's id is Int (32bit)
 Remaining 16bit is Error ID which must be unique within your library.
 Combining these number lead to uniqueness among all libraries.
 
+```C#
+        public static readonly int SFTP_DOWNLOAD_ERROR = CODE_GEN(APP_ID, ERROR_DEVEL, 0x27, "Fail to download file", "Server:{0} Directory:{1} File:{2}");
+        public static readonly int SFTP_FILE_NOT_FOUND = CODE_GEN(APP_ID, INFO, 0x28, "File Not Found", "Server:{0} Directory:{1} File:{2}");
+```
+This is example of how to set StatusCode's id.
+Regarding CODE_GEN function's argument
+* ApplicationID
+* logging type
+* Error ID
+* Summary
+* Detail
+
 Your assigned ApplicationID must be registered in DB table, apps_info_cdtbl. apps_info_cdtbl column would be ApplicationID.
 1-4095 can be assigned and 1 is already used in Gyomu library.
 I would recommend you to set some rule by yourselves, such as common library would be <= 99, business logic library would be >=100 <500, Server side like web library would be >=500 <2000, GUI would be >=2000 or something like that.
