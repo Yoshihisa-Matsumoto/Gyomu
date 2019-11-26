@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Dapper.Contrib.Extensions;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Gyomu.Models
 {
-    [Table("param_master")]
-    public class ParameterMaster
+    [Table("gyomu_param_master")]
+    public partial class ParameterMaster:BaseDapperFastCrud<ParameterMaster>
     {
-        public string item_key { get; set; }
-        public string item_value { get; set; }
-        public string item_fromdate { get; set; }
+        [Key]
+        public virtual string item_key { get; set; }
+        public virtual string item_value { get; set; }
+        [Key]
+        public virtual string item_fromdate { get; set; }
     }
 }

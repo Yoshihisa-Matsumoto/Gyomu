@@ -36,8 +36,7 @@ namespace Gyomu.Common
         public string SID { get; private set; }
 
         private WindowsIdentity _identity = null;
-
-        private DirectoryEntry ntUser;
+        
         private DirectoryEntry adUser;
         public List<string> OU_List { get; private set; }
 
@@ -254,11 +253,7 @@ namespace Gyomu.Common
 
             UserID = CutDomain(identity.Name);
             _identity = identity;
-
-
-            ntUser = new DirectoryEntry("WinNT://" + identity.Name.Replace("\\", "/"));
-
-
+            
             DirectorySearcher ds = new DirectorySearcher(new DirectoryEntry(null))
             {
                 Filter = "samaccountname=" + identity.Name.Split('\\')[1]

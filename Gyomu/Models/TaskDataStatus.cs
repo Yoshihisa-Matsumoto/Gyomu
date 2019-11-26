@@ -1,17 +1,19 @@
-﻿using Dapper.Contrib.Extensions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 
 namespace Gyomu.Models
 {
-    [Table("task_data_status")]
-    public class TaskDataStatus
+    [Table("gyomu_task_data_status")]
+    public partial class TaskDataStatus:BaseDapperFastCrud<TaskDataStatus>
     {
-        [ExplicitKey]
-        public long task_data_id { get; set; }
-        public string task_status { get; set; }
-        public DateTime latest_update_date { get; set; }
-        public long latest_task_instance_id { get; set; }
+        [Key]
+        public virtual long task_data_id { get; set; }
+        public virtual string task_status { get; set; }
+        public virtual DateTime latest_update_date { get; set; }
+        public virtual long latest_task_instance_id { get; set; }
     }
 }

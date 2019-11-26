@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Text;
+using Dapper.FastCrud;
 
 
 namespace Gyomu.Common
@@ -9,6 +10,7 @@ namespace Gyomu.Common
 
     public class DBConnectionFactory
     {
+       
         //private static string _sqldb = null;
         internal static Common.SettingItem.DBType SQLDB
         {
@@ -19,11 +21,13 @@ namespace Gyomu.Common
                 {
                     sqldb = System.Environment.GetEnvironmentVariable(Common.SettingItem.GYOMU_COMMON_MAINDB_TYPE);
                 }
-                if(string.IsNullOrEmpty(sqldb))
+                
+                if (string.IsNullOrEmpty(sqldb))
                     throw new InvalidOperationException("Environment Variable GYOMU_COMMON_MAINDB_TYPE not set");
                 try
                 {
                     SettingItem.DBType dbType = Access.EnumAccess.Parse<SettingItem.DBType>(sqldb);
+                    
                     return dbType;
                 }
                 catch (Exception)
@@ -41,6 +45,18 @@ namespace Gyomu.Common
                     return new Npgsql.NpgsqlConnection(System.Environment.GetEnvironmentVariable(Common.SettingItem.GYOMU_COMMON_MAINDB_CONNECTION));
                 case Common.SettingItem.DBType.MSSQL:
                     return new System.Data.SqlClient.SqlConnection(System.Environment.GetEnvironmentVariable(Common.SettingItem.GYOMU_COMMON_MAINDB_CONNECTION));
+                default:
+                    throw new InvalidOperationException("Environment Variable GYOMU_COMMON_MAINDB_CONNECTION not have proper setting");
+            }
+        }
+        internal static Dapper.FastCrud.SqlDialect GetDapperFastCrudDialect()
+        {
+            switch (SQLDB)
+            {
+                case Common.SettingItem.DBType.POSTGRESQL:
+                    return SqlDialect.PostgreSql;
+                case Common.SettingItem.DBType.MSSQL:
+                    return SqlDialect.MsSql;
                 default:
                     throw new InvalidOperationException("Environment Variable GYOMU_COMMON_MAINDB_CONNECTION not have proper setting");
             }

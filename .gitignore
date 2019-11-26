@@ -3,3 +3,12 @@
 ################################################################################
 
 /.vs/Gyomu
+/Gyomu/bin/Debug/netstandard2.0
+/Gyomu/obj
+/Gyomu.ModelGenerator/bin/Debug
+/Gyomu.ModelGenerator/obj/Debug
+/Gyomu.Test/bin/Debug/netcoreapp2.1
+/Gyomu.Test/obj
+/GyomuTaskExecutor/bin/Debug
+/GyomuTaskExecutor/obj/Debug
+/packages

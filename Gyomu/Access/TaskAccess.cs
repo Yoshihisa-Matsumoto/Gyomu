@@ -7,15 +7,15 @@ namespace Gyomu.Access
 {
     public class TaskAccess
     {
-        public static Common.Task.AbstractBaseTask CreateNewTask(string assembly_name, string full_name, Common.Configurator config)
+        public static Common.Tasks.AbstractBaseTask CreateNewTask(string assembly_name, string full_name, Common.Configurator config)
         {
             return CreateInstance(assembly_name, full_name, config);
         }
-        public static Common.Task.AbstractBaseTask CreateNewTask(string assembly_name, string full_name)
+        public static Common.Tasks.AbstractBaseTask CreateNewTask(string assembly_name, string full_name)
         {
             return CreateInstance(assembly_name, full_name, Common.BaseConfigurator.GetInstance());
         }
-        public static Common.Task.AbstractBaseTask CreateNewTask(short application_id, short task_id)
+        public static Common.Tasks.AbstractBaseTask CreateNewTask(short application_id, short task_id)
         {
             lock (lockObj)
             {
@@ -25,9 +25,9 @@ namespace Gyomu.Access
 
         }
 
-        public static Common.Task.AbstractBaseTask OpenTask(string assembly_name, string full_name, Common.Configurator config, long task_data_id)
+        public static Common.Tasks.AbstractBaseTask OpenTask(string assembly_name, string full_name, Common.Configurator config, long task_data_id)
         {
-            Common.Task.AbstractBaseTask task = CreateInstance(assembly_name, full_name, config);
+            Common.Tasks.AbstractBaseTask task = CreateInstance(assembly_name, full_name, config);
             if (task != null)
             {
                 task.TaskDataID = task_data_id;
@@ -36,14 +36,14 @@ namespace Gyomu.Access
             return task;
         }
 
-        public static T CreateNewTask<T>(Common.Configurator config) where T : Common.Task.AbstractBaseTask
+        public static T CreateNewTask<T>(Common.Configurator config) where T : Common.Tasks.AbstractBaseTask
         {
             return (T)createInstance(typeof(T), config);
         }
-        public static T OpenTask<T>(Common.Configurator config, long task_data_id) where T : Common.Task.AbstractBaseTask
+        public static T OpenTask<T>(Common.Configurator config, long task_data_id) where T : Common.Tasks.AbstractBaseTask
         {
 
-            Common.Task.AbstractBaseTask task = createInstance(typeof(T), config);
+            Common.Tasks.AbstractBaseTask task = createInstance(typeof(T), config);
             if (task != null)
             {
                 task.TaskDataID = task_data_id;
@@ -51,17 +51,17 @@ namespace Gyomu.Access
             return (T)task;
         }
 
-        public static List<Common.Task.AbstractBaseTask> ListupDelegatedTasks(short application_id, short task_id, Common.Configurator config)
+        public static List<Common.Tasks.AbstractBaseTask> ListupDelegatedTasks(short application_id, short task_id, Common.Configurator config)
         {
             List<Models.TaskData> taskDataList = Common.GyomuDataAccess.SelectTaskDataByApplicationIDTaskIDStatusUserList
-                (application_id, task_id, Common.Task.AbstractBaseTask.STATUS_DELEGATE,
+                (application_id, task_id, Common.Tasks.AbstractBaseTask.STATUS_DELEGATE,
                 new List<string>() { config.User.UserID });
-            List<Common.Task.AbstractBaseTask> lstTask = new List<Common.Task.AbstractBaseTask>();
+            List<Common.Tasks.AbstractBaseTask> lstTask = new List<Common.Tasks.AbstractBaseTask>();
             Models.TaskInfo taskInfo = Common.GyomuDataAccess.SelectTaskInfo(application_id, task_id);
 
             foreach (Models.TaskData taskData in taskDataList)
             {
-                Common.Task.AbstractBaseTask task = OpenTask(taskInfo.assembly_name, taskInfo.class_name, config ?? Common.BaseConfigurator.GetInstance(), taskData.id);
+                Common.Tasks.AbstractBaseTask task = OpenTask(taskInfo.assembly_name, taskInfo.class_name, config ?? Common.BaseConfigurator.GetInstance(), taskData.id);
                 lstTask.Add(task);
             }
             return lstTask;
@@ -70,28 +70,28 @@ namespace Gyomu.Access
         public static bool TaskSucceeded(long task_data_id)
         {
             Models.TaskDataStatus taskStatus= Common.GyomuDataAccess.SelectTaskStatus(new Models.TaskData() { id = task_data_id });
-            return taskStatus.task_status.Equals(Common.Task.AbstractBaseTask.STATUS_COMPLETE);
+            return taskStatus.task_status.Equals(Common.Tasks.AbstractBaseTask.STATUS_COMPLETE);
 
         }
 
         internal static object lockObj = new object();
 
         #region internal method
-        internal static Common.Task.AbstractBaseTask CreateNewTask(Models.TaskInfo taskInfo, Common.Configurator config)
+        internal static Common.Tasks.AbstractBaseTask CreateNewTask(Models.TaskInfo taskInfo, Common.Configurator config)
         {
             return CreateInstance(taskInfo.assembly_name, taskInfo.class_name, config);
         }
         #endregion
 
         #region private Method
-        private static Common.Task.AbstractBaseTask createInstance(Type task_type, Common.Configurator config)
+        private static Common.Tasks.AbstractBaseTask createInstance(Type task_type, Common.Configurator config)
         {
-            Common.Task.AbstractBaseTask abstractTask = null;
+            Common.Tasks.AbstractBaseTask abstractTask = null;
             try
             {
                 Assembly found_assembly = task_type.Assembly;
 
-                abstractTask = (Common.Task.AbstractBaseTask)found_assembly.CreateInstance(task_type.FullName);
+                abstractTask = (Common.Tasks.AbstractBaseTask)found_assembly.CreateInstance(task_type.FullName);
             }
             catch (Exception)
             {
@@ -102,9 +102,9 @@ namespace Gyomu.Access
             return abstractTask;
         }
 
-        private static Common.Task.AbstractBaseTask CreateInstance(string assembly_name, string full_name, Common.Configurator config)
+        private static Common.Tasks.AbstractBaseTask CreateInstance(string assembly_name, string full_name, Common.Configurator config)
         {
-            Common.Task.AbstractBaseTask abstractTask = null;
+            Common.Tasks.AbstractBaseTask abstractTask = null;
             try
             {
                 Type found_type = null;
@@ -127,7 +127,7 @@ namespace Gyomu.Access
                             break;
                     }
                 }
-                abstractTask = (Common.Task.AbstractBaseTask)found_assembly.CreateInstance(full_name);
+                abstractTask = (Common.Tasks.AbstractBaseTask)found_assembly.CreateInstance(full_name);
             }
             catch (Exception)
             {
@@ -146,8 +146,8 @@ namespace Gyomu.Access
             updateTime = taskStatus.latest_update_date;
             switch (taskStatus.task_status)
             {
-                case Common.Task.AbstractBaseTask.STATUS_COMPLETE:
-                case Common.Task.AbstractBaseTask.STATUS_FAIL:
+                case Common.Tasks.AbstractBaseTask.STATUS_COMPLETE:
+                case Common.Tasks.AbstractBaseTask.STATUS_FAIL:
                     return true;
                 default:
                     return false;

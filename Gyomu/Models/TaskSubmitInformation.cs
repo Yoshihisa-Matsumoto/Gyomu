@@ -1,16 +1,20 @@
-﻿using Dapper.Contrib.Extensions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Gyomu.Models
 {
-    [Table("task_instance_submit_information")]
-    public class TaskSubmitInformation
+    [Table("gyomu_task_instance_submit_information")]
+    public partial class TaskSubmitInformation:BaseDapperFastCrud<TaskSubmitInformation>
     {
         [Key]
-        public long id { get; set; }
-        public long task_instance_id { get; set; }
-        public string submit_to { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public virtual long id { get; set; }
+
+        public virtual long task_instance_id { get; set; }
+
+        public virtual string submit_to { get; set; }
     }
 }

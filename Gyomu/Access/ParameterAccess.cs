@@ -4,8 +4,6 @@ using System.Text;
 using System.ComponentModel;
 using System.Transactions;
 using System.Data;
-using Dapper;
-using Dapper.Contrib.Extensions;
 using System.Linq;
 
 namespace Gyomu.Access

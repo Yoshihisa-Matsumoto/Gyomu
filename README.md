@@ -77,6 +77,7 @@ The encrypted value can be decrypted only by encrypted user.
 This example stores/retrieves string list parameter
 
 ```C#
+string key = "TEST_STRINGLIST_TEST";
 List<string> itemValue = new List<string>() { "Value@!@#$%", "ABC#DI$FG" };
 Gyomu.Access.ParameterAccess.SetStringListValue(key, itemValue);
 List<string> retrievedValue= Gyomu.Access.ParameterAccess.GetStringListValue(key));

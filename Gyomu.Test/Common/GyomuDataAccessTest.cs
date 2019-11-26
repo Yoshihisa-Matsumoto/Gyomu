@@ -5,11 +5,13 @@ using Xunit;
 using Gyomu.Common;
 using System.Linq;
 using Gyomu.Models;
+using Xunit.Abstractions;
 
 namespace Gyomu.Test.Common
 {
     public class GyomuDataAccessTest
     {
+
         internal const short testApplicationId = 32650;
         internal const short testTaskID1 = 1;
         internal const short testTaskID2 = 2;
@@ -94,6 +96,15 @@ namespace Gyomu.Test.Common
             Assert.Equal(insertItem.recipient_type, selectItem.recipient_type);
             Assert.Equal(insertItem.region, selectItem.region);
             Assert.Equal(insertItem.status_type, selectItem.status_type);
+            insertItem = new Models.StatusHandler()
+            {
+                application_id = testApplicationId,
+                recipient_address = currentUser.MailAddress,
+                recipient_type = "CC",
+                status_type = StatusCode.ERROR_BUSINESS
+            };
+            GyomuDataAccess.InsertStatusHandler(
+               insertItem);
         }
 
         internal static Models.StatusHandler selectStatusHandler(int id)
@@ -355,6 +366,7 @@ namespace Gyomu.Test.Common
             };
             GyomuDataAccess.InsertTaskAccessList(access1);
             GyomuDataAccess.InsertTaskAccessList(access2);
+
             Models.TaskAccessList accessout=GyomuDataAccess.SelectTaskAccessList(access1.id);
             List<Models.TaskAccessList> accessLists= GyomuDataAccess.SelectTaskAccessLists(testApplicationId,1);
             Assert.Equal(access1, accessout, new TaskComparer());
@@ -406,9 +418,9 @@ namespace Gyomu.Test.Common
                 entry_author = config.Username,
                 parameter = "Test1",
             };
-            GyomuDataAccess.InsertTaskData(ref task1);
+            GyomuDataAccess.InsertTaskData( task1);
 
-            GyomuDataAccess.InsertTaskData(ref task2);
+            GyomuDataAccess.InsertTaskData( task2);
 
             TaskData outData = GyomuDataAccess.SelectTaskData(task1.id);
             Assert.Equal(task1, outData, new TaskComparer());
@@ -482,9 +494,9 @@ namespace Gyomu.Test.Common
 
 
             };
-            GyomuDataAccess.InsertTaskInstance(ref task1);
+            GyomuDataAccess.InsertTaskInstance(task1);
 
-            GyomuDataAccess.InsertTaskInstance(ref task2);
+            GyomuDataAccess.InsertTaskInstance(task2);
 
             TaskInstance outInstance = GyomuDataAccess.SelectTaskInstance(task1.id);
             Assert.Equal(task1, outInstance, new TaskComparer());
@@ -625,7 +637,7 @@ namespace Gyomu.Test.Common
                 log="TEST LOG"
             };
 
-            GyomuDataAccess.InsertTaskDataLog(ref log1);
+            GyomuDataAccess.InsertTaskDataLog(log1);
             Assert.Equal("TEST LOG",log1.log);
 
 
@@ -695,8 +707,8 @@ namespace Gyomu.Test.Common
         {
             return x.task_data_id == y.task_data_id
                 && x.latest_task_instance_id == y.latest_task_instance_id
-                && x.task_status.Equals(y.task_status)
-                && x.latest_update_date.Equals(y.latest_update_date);
+                && x.task_status.Equals(y.task_status);
+                //&& x.latest_update_date.Equals(y.latest_update_date);
         }
 
         public int GetHashCode(TaskInfo obj)

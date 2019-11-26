@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 using Dapper;
-using Dapper.Contrib;
-using Dapper.Contrib.Extensions;
 using Xunit;
 using Gyomu.Test.Common;
 

@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Linq;
-using Dapper;
-using Dapper.Contrib;
-using Dapper.Contrib.Extensions;
 
 namespace Gyomu
 {
@@ -463,7 +460,7 @@ namespace Gyomu
         {
             StringBuilder strBuf = new StringBuilder();
             strBuf.Append("User:" + Common.User.CurrentUser.UserID + "\tMachine:" + System.Environment.MachineName + "\tInstance:" + _instance_id.ToString() + "\n");
-            if (Convert.ToInt32(StatusType) > ERROR_BUSINESS)
+            if (Convert.ToInt32(StatusType) >= ERROR_DEVEL)
             {
                 //For Developer
                 strBuf.Append(Message);

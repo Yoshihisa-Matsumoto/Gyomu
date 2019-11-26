@@ -1,20 +1,21 @@
-﻿using Dapper.Contrib.Extensions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Gyomu.Models
 {
-    [Table("task_info_cdtbl")]
-    public class TaskInfo
+    [Table("gyomu_task_info_cdtbl")]
+    public partial class TaskInfo:BaseDapperFastCrud<TaskInfo>
     {
-        public short application_id { get; set; }
-        public short task_id { get; set; }
-        public string description { get; set; }
-        public string assembly_name { get; set; }
-        public string class_name { get; set; }
-        public bool restartable { get; set; }
-
-
+        [Key]
+        public virtual short application_id { get; set; }
+        [Key]
+        public virtual short task_id { get; set; }
+        public virtual string description { get; set; }
+        public virtual string assembly_name { get; set; }
+        public virtual string class_name { get; set; }
+        public virtual bool restartable { get; set; }
     }
 }

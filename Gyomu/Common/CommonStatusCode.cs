@@ -62,6 +62,21 @@ namespace Gyomu.Common
 
         public static readonly int COMMENT_REQUIRED = CODE_GEN(APP_ID, ERROR_BUSINESS, 0x52, "Comment is mandatory to continue the process", "");
 
+        public static readonly int DELEGATE_TASK_EXECUTION_ERROR = CODE_GEN(APP_ID, ERROR_DEVEL, 0x61, "Task Generation Error", "App ID:{0} Task ID:{1} Task Data ID:{2}");
+        public static readonly int SERVICE_LOAD_ERROR = CODE_GEN(APP_ID, ERROR_DEVEL, 0x62, "Service Load Error", "Service ID:{0}");
+        public static readonly int SERVICE_INITIALIZATION_ERROR = CODE_GEN(APP_ID, ERROR_DEVEL, 0x63, "Service Initialization Error", "");
+        public static readonly int SERVICE_NOT_FOUND = CODE_GEN(APP_ID, ERROR_DEVEL, 0x64, "Service ID={0} Not Found", "");
+
+        public static readonly int UNKNOWN_THREAD_ERROR = CODE_GEN(APP_ID, ERROR_DEVEL, 0x71, "Unknown Error Happens. Developer have to solve the problem. Handle Exception by yourself.", "");
+        public static readonly int QUEUE_ERROR_FOUND = CODE_GEN(APP_ID, INFO, 0x72, "Queue Manager contains Error Status", "Count:{0}");
+        public static readonly int UNKNOWN_THREAD_MANAGER_ERROR = CODE_GEN(APP_ID, ERROR_DEVEL, 0x73, "Thread Manager caused Exception. Need Fix", "");
+        public static readonly int POOL_MGR_START_WITHOUT_FINISH = CODE_GEN(APP_ID, ERROR_DEVEL, 0x74, "Thread Pool Manager can't start if there are exisitng execution unit", "");
+        public static readonly int ITEM_FINISHED = CODE_GEN(APP_ID, INFO, 0x75, "Item{0} Finished", "");
+        public static readonly int ITEM_ATTACHED = CODE_GEN(APP_ID, INFO, 0x76, "Item{0} Attached", "");
+        public static readonly int ITEM_STARTED = CODE_GEN(APP_ID, INFO, 0x77, "Item{0} Started", "");
+        public static readonly int ITEM_THREAD_EXIT = CODE_GEN(APP_ID, INFO, 0x78, "Item{0} Thread Finished", "");
+        public static readonly int ITEM_TRIGGERED_WITH_INVALID_STATUS = CODE_GEN(APP_ID, ERROR_DEVEL, 0x79, "Item{0} Status Invalid but Triggered Status:{1}", "");
+
 
         public CommonStatusCode(int id, Object[] args, Configurator config, short app_id)
             : base(id, args, config,app_id)

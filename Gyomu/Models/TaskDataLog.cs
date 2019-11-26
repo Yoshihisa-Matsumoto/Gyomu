@@ -1,18 +1,21 @@
-﻿using Dapper.Contrib.Extensions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 
 namespace Gyomu.Models
 {
-    [Table("task_data_log")]
-    public class TaskDataLog
+    [Table("gyomu_task_data_log")]
+    public partial class TaskDataLog:BaseDapperFastCrud<TaskDataLog>
     {
         [Key]
-        public long id { get; set; }
-        public long task_data_id { get; set; }
-        [Computed]
-        public DateTime log_time { get; set; }
-        public string log { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public virtual long id { get; set; }
+        public virtual long task_data_id { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public virtual DateTime log_time { get; set; }
+        public virtual string log { get; set; }
     }
 }

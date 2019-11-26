@@ -10,7 +10,7 @@ namespace Gyomu.Access
         {
             string val = xmlData;
             if (val == null)
-                return default(T);
+                return default;
             try
             {
                 System.Xml.Serialization.XmlSerializer serializer = new System.Xml.Serialization.XmlSerializer(typeof(T));
@@ -21,7 +21,7 @@ namespace Gyomu.Access
             }
             catch (Exception )
             {
-                return default(T);
+                return default;
             }
         }
 
