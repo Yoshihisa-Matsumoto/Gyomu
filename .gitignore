@@ -12,3 +12,5 @@
 /GyomuTaskExecutor/bin/Debug
 /GyomuTaskExecutor/obj/Debug
 /packages
+/.vs/slnx.sqlite
+/.vs/VSWorkspaceState.json
