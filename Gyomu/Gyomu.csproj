@@ -11,7 +11,7 @@
     <PackageReference Include="BouncyCastle.NetCore" Version="1.8.5" />
     <PackageReference Include="Dapper.FastCrud" Version="2.5.0.39" />
     <PackageReference Include="FluentFTP" Version="28.0.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Npgsql" Version="4.1.0" />
     <PackageReference Include="SharpZipLib" Version="1.2.0" />
     <PackageReference Include="SSH.NET" Version="2016.1.0" />
