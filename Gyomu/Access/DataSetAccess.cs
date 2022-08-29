@@ -41,7 +41,7 @@ namespace Gyomu.Access
             ms.Position = 0;
             dt.ReadXml(ms);
         }
-        public static void DumpDataSet(DataTable dt, string filename, List<string> lstSkipColumn = null)
+        public static void DumpDataSet(DataTable dt, string filename, List<string>? lstSkipColumn = null)
         {
             List<string> lstColumnName = new List<string>();
 
@@ -94,7 +94,7 @@ namespace Gyomu.Access
                 return "\"" + obj.ToString() + "\"";
         }
         //You need to install Microsoft Access Database Engine 2010 Redistributable (AccessDatabaseEngine_X64.exe)
-        public static DataTable GetDataTableFromCSV(String strFilePath, Boolean isInHeader = true, string schema_ini_file = null)
+        public static DataTable GetDataTableFromCSV(String strFilePath, Boolean isInHeader = true, string? schema_ini_file = null)
         {
             DataTable dt = new DataTable();
             String strInHeader = isInHeader ? "YES" : "NO";
@@ -114,7 +114,7 @@ namespace Gyomu.Access
             OleDbCommand cmd = new OleDbCommand(strCmd, con);
             OleDbDataAdapter adp = new OleDbDataAdapter(cmd);
             adp.Fill(dt);
-            if (schema_ini_file != null)
+            if (schema_ini_file != null && strSchemeFile!=null)
                 System.IO.File.Delete(strSchemeFile);
             return dt;
         }
@@ -171,7 +171,7 @@ namespace Gyomu.Access
 
             return result;
         }
-        public static ReconcileResult CustomReconcileCSV(string csvFilename1, string csvFilename2, bool headerExist1, bool headerExist2, string table1_header, string table2_header, Dictionary<string, string> dictKey, Dictionary<string, string> dictCompareColumns, Dictionary<string, string> dictAmbigousSortKey, BaseReconcile reconcileMethod = null, string schema_ini_file = null)
+        public static ReconcileResult CustomReconcileCSV(string csvFilename1, string csvFilename2, bool headerExist1, bool headerExist2, string table1_header, string table2_header, Dictionary<string, string> dictKey, Dictionary<string, string> dictCompareColumns, Dictionary<string, string> dictAmbigousSortKey, BaseReconcile? reconcileMethod = null, string? schema_ini_file = null)
         {
 
             DataTable tbl1 = null;
@@ -194,7 +194,7 @@ namespace Gyomu.Access
         /*
          * This reconciliation is done between different schema table
          */
-        public static ReconcileResult CustomReconcile(DataTable tbl1, DataTable tbl2, string table1_header, string table2_header, Dictionary<string, string> dictKey, Dictionary<string, string> dictCompareColumns, Dictionary<string, string> dictAmbigousSortKey, BaseReconcile reconcileMethod = null)
+        public static ReconcileResult CustomReconcile(DataTable tbl1, DataTable tbl2, string table1_header, string table2_header, Dictionary<string, string> dictKey, Dictionary<string, string> dictCompareColumns, Dictionary<string, string> dictAmbigousSortKey, BaseReconcile? reconcileMethod = null)
         {
             ReconcileResult result = new ReconcileResult(table1_header, table2_header);
             if (reconcileMethod == null)

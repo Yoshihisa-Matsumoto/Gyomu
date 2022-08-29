@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "dgSpecHash": "wMo8ml3upiTmuPLzIWlG0ZKQaX11k+td9mQEyo0lEnD1QI02+DVY4JHzHbStYY5EVtdM1oje8v9vHYXyON92fg==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\yoshm\\source\\repos\\Yoshihisa-Matsumoto\\Gyomu\\Gyomu.ModelGenerator\\Gyomu.ModelGenerator.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\yoshm\\.nuget\\packages\\dapper\\2.0.123\\dapper.2.0.123.nupkg.sha512",
+    "C:\\Users\\yoshm\\.nuget\\packages\\dapper.fastcrud\\3.0.46\\dapper.fastcrud.3.0.46.nupkg.sha512",
+    "C:\\Users\\yoshm\\.nuget\\packages\\dapper.fastcrud.modelgenerator\\3.0.44\\dapper.fastcrud.modelgenerator.3.0.44.nupkg.sha512",
+    "C:\\Users\\yoshm\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
+    "C:\\Users\\yoshm\\.nuget\\packages\\microsoft.dotnet.upgradeassistant.extensions.default.analyzers\\0.4.336902\\microsoft.dotnet.upgradeassistant.extensions.default.analyzers.0.4.336902.nupkg.sha512",
+    "C:\\Users\\yoshm\\.nuget\\packages\\system.componentmodel.annotations\\5.0.0\\system.componentmodel.annotations.5.0.0.nupkg.sha512",
+    "C:\\Users\\yoshm\\.nuget\\packages\\system.data.datasetextensions\\4.5.0\\system.data.datasetextensions.4.5.0.nupkg.sha512"
+  ],
+  "logs": []
+}

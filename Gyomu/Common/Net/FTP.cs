@@ -49,7 +49,7 @@ namespace Gyomu.Common.Net
                 else
                 {
                     NetworkCredential proxyCredential = new NetworkCredential(_connectionInformation.ProxyUserID, _connectionInformation.ProxyPassword);
-                    FluentFTP.Proxy.ProxyInfo proxyInfo = new FluentFTP.Proxy.ProxyInfo() { Host = _connectionInformation.ProxyHost, Port = _connectionInformation.ProxyPort, Credentials = proxyCredential };
+                    FluentFTP.FtpProxyProfile proxyInfo = new FluentFTP.FtpProxyProfile() { ProxyHost = _connectionInformation.ProxyHost, ProxyPort = _connectionInformation.ProxyPort, ProxyCredentials = proxyCredential };
 
                     request = new FluentFTP.Proxy.FtpClientHttp11Proxy(proxyInfo)
                     {
@@ -119,8 +119,8 @@ namespace Gyomu.Common.Net
                 if (retVal.IsSucceeded == false)
                     return retVal;
                 request.DownloadDataType = isBinary ? FtpDataType.Binary : FtpDataType.ASCII;
-                bool result = request.DownloadFile(transportInformation.DestinationFullName, transportInformation.SourceFullName, FtpLocalExists.Overwrite, FtpVerify.Retry);
-                if (result == false)
+                FtpStatus result = request.DownloadFile(transportInformation.DestinationFullName, transportInformation.SourceFullName, FtpLocalExists.Overwrite, FtpVerify.Retry);
+                if (result == FtpStatus.Failed)
                 {
                     return new Common.CommonStatusCode(Common.CommonStatusCode.FTP_DOWNLOAD_ERROR, new object[] { transportInformation.SourceFullName, transportInformation.DestinationFullName, "Not sure" }, Config, ApplicationID);
                 }
@@ -141,8 +141,8 @@ namespace Gyomu.Common.Net
                 if (retVal.IsSucceeded == false)
                     return retVal;
                 request.UploadDataType = isBinary ? FtpDataType.Binary : FtpDataType.ASCII;
-                bool result = request.UploadFile(transportInformation.SourceFullName, transportInformation.DestinationFullName, FtpExists.Overwrite);
-                if (result == false)
+                FtpStatus result = request.UploadFile(transportInformation.SourceFullName, transportInformation.DestinationFullName, FtpRemoteExists.Overwrite);
+                if (result == FtpStatus.Failed)
                 {
                     return new Common.CommonStatusCode(Common.CommonStatusCode.FTP_DOWNLOAD_ERROR, new object[] { transportInformation.SourceFullName, transportInformation.DestinationFullName, "Not sure" }, Config, ApplicationID);
                 }
@@ -189,7 +189,7 @@ namespace Gyomu.Common.Net
             {
                 foreach (FtpListItem item in request.GetListing(transportInformation.SourceFolderName))
                 {
-                    if (item.Type == FtpFileSystemObjectType.File)
+                    if (item.Type == FtpObjectType.File)
                     {
                         if (string.IsNullOrEmpty(transportInformation.SourceFileName))
                             lstFile.Add(item.Name);

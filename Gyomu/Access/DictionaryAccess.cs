@@ -6,7 +6,7 @@ namespace Gyomu.Access
 {
     public class DictionaryAccess
     {
-        public static StatusCode ReconcileData<T, EType>(System.Collections.IDictionary dictA, System.Collections.IDictionary dictB, Models.ReconcileResult<T, EType> result, int[] customFields = null)
+        public static StatusCode ReconcileData<T, EType>(System.Collections.IDictionary dictA, System.Collections.IDictionary dictB, Models.ReconcileResult<T, EType> result, int[]? customFields = null)
                     where T : Models.BaseItemRecord, new()
                     where EType : struct
         {
@@ -31,9 +31,9 @@ namespace Gyomu.Access
                 if (key.GetType().IsEnum)
                     strItem = EnumAccess.GetEnumValueDescription(key);
                 else
-                    strItem = key.ToString();
+                    strItem = key.ToString()??"";
                 strKey = strPrefix;
-                object valA = dictA[key];
+                object? valA = dictA[key];
                 if (strKey == null)
                     strKey = strItem;
                 else
@@ -45,7 +45,7 @@ namespace Gyomu.Access
                     result.Add(strKey, default(EType), item, null, null);
                     continue;
                 }
-                object valB = dictB[key];
+                object? valB = dictB[key];
                 if (valA is System.Collections.IDictionary colA)
                 {
                     System.Collections.IDictionary colB = (System.Collections.IDictionary)valB;
@@ -95,16 +95,17 @@ namespace Gyomu.Access
                     where EType : struct
         {
             StatusCode retVal = StatusCode.SUCCEED_STATUS;
-            string strKey = null;
+            string strKey ;
             foreach (object key in dictB.Keys)
             {
-                string strItem = null;
+                string strItem;
+
                 if (key.GetType().IsEnum)
                     strItem = EnumAccess.GetEnumValueDescription(key);
                 else
-                    strItem = key.ToString();
+                    strItem = key.ToString()??"";
                 strKey = strPrefix;
-                object valB = dictB[key];
+                object? valB = dictB[key];
                 if (strKey == null)
                     strKey = strItem;
                 else
@@ -133,6 +134,7 @@ namespace Gyomu.Access
         }
         public static void BuildDictionary<K, R>(K key, R record, int[] fields, ref Dictionary<K, R> dictData)
             where R : Models.BaseItemRecord, new()
+            where K : notnull
         {
 
             if (dictData.ContainsKey(key) == false)
@@ -156,6 +158,8 @@ namespace Gyomu.Access
         }
         public static void BuildDictionary<K1, K2, R>(K1 key1, K2 key2, R record, int[] fields, ref Dictionary<K1, Dictionary<K2, R>> dictData)
                where R : Models.BaseItemRecord, new()
+               where K2: notnull
+               where K1: notnull
         {
             if (dictData.ContainsKey(key1) == false)
                 dictData.Add(key1, new Dictionary<K2, R>());
@@ -164,6 +168,9 @@ namespace Gyomu.Access
         }
         public static void BuildDictionary<K1, K2, K3, R>(K1 key1, K2 key2, K3 key3, R record, int[] fields, ref Dictionary<K1, Dictionary<K2, Dictionary<K3, R>>> dictData)
                where R : Models.BaseItemRecord, new()
+               where K1: notnull
+               where K2: notnull
+               where K3:notnull
         {
             if (dictData.ContainsKey(key1) == false)
                 dictData.Add(key1, new Dictionary<K2, Dictionary<K3, R>>());
@@ -172,6 +179,10 @@ namespace Gyomu.Access
         }
         public static void BuildDictionary<K1, K2, K3, K4, R>(K1 key1, K2 key2, K3 key3, K4 key4, R record, int[] fields, ref Dictionary<K1, Dictionary<K2, Dictionary<K3, Dictionary<K4, R>>>> dictData)
                where R : Models.BaseItemRecord, new()
+               where K1 : notnull
+               where K2 : notnull
+               where K3 : notnull
+               where K4 : notnull
         {
             if (dictData.ContainsKey(key1) == false)
                 dictData.Add(key1, new Dictionary<K2, Dictionary<K3, Dictionary<K4, R>>>());
@@ -180,6 +191,11 @@ namespace Gyomu.Access
         }
         public static void BuildDictionary<K1, K2, K3, K4, K5, R>(K1 key1, K2 key2, K3 key3, K4 key4, K5 key5, R record, int[] fields, ref Dictionary<K1, Dictionary<K2, Dictionary<K3, Dictionary<K4, Dictionary<K5, R>>>>> dictData)
                where R : Models.BaseItemRecord, new()
+               where K1 : notnull
+               where K2 : notnull
+               where K3 : notnull
+               where K4 : notnull
+               where K5 : notnull
         {
             if (dictData.ContainsKey(key1) == false)
                 dictData.Add(key1, new Dictionary<K2, Dictionary<K3, Dictionary<K4, Dictionary<K5, R>>>>());
@@ -187,6 +203,7 @@ namespace Gyomu.Access
             BuildDictionary<K2, K3, K4, K5, R>(key2, key3, key4, key5, record, fields, ref dictChild);
         }
         public static void BuildDictionary<K, R>(K key, R record, ref Dictionary<K, List<R>> dictData)
+            where K:notnull
         {
             if (dictData.ContainsKey(key) == false)
                 dictData.Add(key, new List<R>() { record });
@@ -194,6 +211,8 @@ namespace Gyomu.Access
                 dictData[key].Add(record);
         }
         public static void BuildDictionary<K1, K2, R>(K1 key1, K2 key2, R record, ref Dictionary<K1, Dictionary<K2, List<R>>> dictData)
+            where K1:notnull
+            where K2:notnull
         {
             if (dictData.ContainsKey(key1) == false)
                 dictData.Add(key1, new Dictionary<K2, List<R>>());
@@ -201,6 +220,9 @@ namespace Gyomu.Access
             BuildDictionary<K2, R>(key2, record, ref dictChild);
         }
         public static void BuildDictionary<K1, K2, K3, R>(K1 key1, K2 key2, K3 key3, R record, ref Dictionary<K1, Dictionary<K2, Dictionary<K3, List<R>>>> dictData)
+            where K1 : notnull
+            where K2 : notnull
+            where K3 : notnull
         {
             if (dictData.ContainsKey(key1) == false)
                 dictData.Add(key1, new Dictionary<K2, Dictionary<K3, List<R>>>());
@@ -208,6 +230,10 @@ namespace Gyomu.Access
             BuildDictionary<K2, K3, R>(key2, key3, record, ref dictChild);
         }
         public static void BuildDictionary<K1, K2, K3, K4, R>(K1 key1, K2 key2, K3 key3, K4 key4, R record, ref Dictionary<K1, Dictionary<K2, Dictionary<K3, Dictionary<K4, List<R>>>>> dictData)
+            where K1 : notnull
+            where K2 : notnull
+            where K3 : notnull
+            where K4 : notnull
         {
             if (dictData.ContainsKey(key1) == false)
                 dictData.Add(key1, new Dictionary<K2, Dictionary<K3, Dictionary<K4, List<R>>>>());
@@ -215,6 +241,11 @@ namespace Gyomu.Access
             BuildDictionary<K2, K3, K4, R>(key2, key3, key4, record, ref dictChild);
         }
         public static void BuildDictionary<K1, K2, K3, K4, K5, R>(K1 key1, K2 key2, K3 key3, K4 key4, K5 key5, R record, ref Dictionary<K1, Dictionary<K2, Dictionary<K3, Dictionary<K4, Dictionary<K5, List<R>>>>>> dictData)
+            where K1 : notnull
+            where K2 : notnull
+            where K3 : notnull
+            where K4 : notnull
+            where K5 : notnull
         {
             if (dictData.ContainsKey(key1) == false)
                 dictData.Add(key1, new Dictionary<K2, Dictionary<K3, Dictionary<K4, Dictionary<K5, List<R>>>>>());
@@ -222,6 +253,12 @@ namespace Gyomu.Access
             BuildDictionary<K2, K3, K4, K5, R>(key2, key3, key4, key5, record, ref dictChild);
         }
         public static void BuildDictionary<K1, K2, K3, K4, K5,K6, R>(K1 key1, K2 key2, K3 key3, K4 key4, K5 key5,K6 key6, R record, ref Dictionary<K1, Dictionary<K2, Dictionary<K3, Dictionary<K4, Dictionary<K5,Dictionary<K6, List<R>>>>>>> dictData)
+            where K1 : notnull
+            where K2 : notnull
+            where K3 : notnull
+            where K4 : notnull
+            where K5 : notnull
+            where K6 : notnull
         {
             if (dictData.ContainsKey(key1) == false)
                 dictData.Add(key1, new Dictionary<K2, Dictionary<K3, Dictionary<K4, Dictionary<K5, Dictionary<K6,List<R>>>>>>());

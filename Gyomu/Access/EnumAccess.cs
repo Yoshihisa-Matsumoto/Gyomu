@@ -32,11 +32,11 @@ namespace Gyomu.Access
             string result = string.Empty;
             if (value != null)
             {
-                result = value.ToString();
+                result = value.ToString()??"";
                 System.Type type = value.GetType();
                 try
                 {
-                    result = Enum.GetName(type, value);
+                    result = Enum.GetName(type, value)??"";
                     System.Reflection.FieldInfo fieldInfo = type.GetField(result);
                     object[] attributeArray = fieldInfo.GetCustomAttributes(typeof(DescriptionAttribute), false);
                     DescriptionAttribute attribute = null;
@@ -53,7 +53,7 @@ namespace Gyomu.Access
                 }
                 catch (ArgumentException)
                 {
-                    result = value.ToString();
+                    result = value.ToString()??"";
                 }
             }
             return result;
