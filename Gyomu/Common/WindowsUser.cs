@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Text;
 using System.Security.Principal;
 using System.DirectoryServices;
+using System.Runtime.Versioning;
 
 namespace Gyomu.Common
 {
+    [SupportedOSPlatform("windows")]
     public class WindowsUser : User
     {
         private string _display_name = null;

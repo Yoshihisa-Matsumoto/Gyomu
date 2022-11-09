@@ -51,20 +51,19 @@ namespace Gyomu.Common.Net
                     NetworkCredential proxyCredential = new NetworkCredential(_connectionInformation.ProxyUserID, _connectionInformation.ProxyPassword);
                     FluentFTP.FtpProxyProfile proxyInfo = new FluentFTP.FtpProxyProfile() { ProxyHost = _connectionInformation.ProxyHost, ProxyPort = _connectionInformation.ProxyPort, ProxyCredentials = proxyCredential };
 
-                    request = new FluentFTP.Proxy.FtpClientHttp11Proxy(proxyInfo)
+                    request = new FluentFTP.Proxy.SyncProxy.FtpClientHttp11Proxy(proxyInfo)
                     {
                         Host = _connectionInformation.ProxyHost,
                         Port = _connectionInformation.Port
                     };
                 }
-
-                request.SocketKeepAlive = false;
-                request.DataConnectionType = _connectionInformation.IsPassive ? FtpDataConnectionType.AutoPassive : FtpDataConnectionType.AutoActive;
-                request.EncryptionMode = _connectionInformation.SslEnabled ? (_connectionInformation.SslImplicit ? FtpEncryptionMode.Implicit : FtpEncryptionMode.Explicit) : FtpEncryptionMode.None;
-                request.SslProtocols = _connectionInformation.SslEnabled ? System.Security.Authentication.SslProtocols.Tls : System.Security.Authentication.SslProtocols.None;
+                
+                request.Config.SocketKeepAlive = false;
+                request.Config.DataConnectionType = _connectionInformation.IsPassive ? FtpDataConnectionType.AutoPassive : FtpDataConnectionType.AutoActive;
+                request.Config.EncryptionMode = _connectionInformation.SslEnabled ? (_connectionInformation.SslImplicit ? FtpEncryptionMode.Implicit : FtpEncryptionMode.Explicit) : FtpEncryptionMode.None;
+                request.Config.SslProtocols = _connectionInformation.SslEnabled ? System.Security.Authentication.SslProtocols.Tls : System.Security.Authentication.SslProtocols.None;
                 if (_connectionInformation.SslEnabled)
                     request.ValidateCertificate += request_ValidateCertificate;
-
                 if (string.IsNullOrEmpty(_connectionInformation.UserID) == false)
                 {
                     string password = "";
@@ -105,7 +104,8 @@ namespace Gyomu.Common.Net
             return retVal;
         }
 
-        private void request_ValidateCertificate(FtpClient control, FtpSslValidationEventArgs e)
+
+        private void request_ValidateCertificate(FluentFTP.Client.BaseClient.BaseFtpClient control, FtpSslValidationEventArgs e)
         {
             e.Accept = true;
         }
@@ -118,7 +118,7 @@ namespace Gyomu.Common.Net
                 retVal = init();
                 if (retVal.IsSucceeded == false)
                     return retVal;
-                request.DownloadDataType = isBinary ? FtpDataType.Binary : FtpDataType.ASCII;
+                request.Config.DownloadDataType = isBinary ? FtpDataType.Binary : FtpDataType.ASCII;
                 FtpStatus result = request.DownloadFile(transportInformation.DestinationFullName, transportInformation.SourceFullName, FtpLocalExists.Overwrite, FtpVerify.Retry);
                 if (result == FtpStatus.Failed)
                 {
@@ -140,7 +140,7 @@ namespace Gyomu.Common.Net
                 retVal = init();
                 if (retVal.IsSucceeded == false)
                     return retVal;
-                request.UploadDataType = isBinary ? FtpDataType.Binary : FtpDataType.ASCII;
+                request.Config.UploadDataType = isBinary ? FtpDataType.Binary : FtpDataType.ASCII;
                 FtpStatus result = request.UploadFile(transportInformation.SourceFullName, transportInformation.DestinationFullName, FtpRemoteExists.Overwrite);
                 if (result == FtpStatus.Failed)
                 {
