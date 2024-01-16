@@ -15,7 +15,7 @@
     <PackageReference Include="SharpZipLib" Version="1.4.1" />
     <PackageReference Include="SSH.NET" Version="2020.0.2" />
     <PackageReference Include="System.Data.OleDb" Version="7.0.0" />
-    <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
     <PackageReference Include="System.DirectoryServices" Version="7.0.0" />
     <PackageReference Include="System.Security.Cryptography.ProtectedData" Version="7.0.0" />
   </ItemGroup>
